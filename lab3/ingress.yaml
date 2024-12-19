@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: reactapp-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
+spec:
+  tls:
+    - hosts:
+      - reactapp.ru
+      secretName: reactapp-tls
+      
+  rules:
+  - host: reactapp.ru
+    http:
+      paths:
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: reactapp-service
+            port: 
+              number: 3000
